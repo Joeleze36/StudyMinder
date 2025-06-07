@@ -1,2 +1,2 @@
 # StudyMinder
-Assessment 
+Study Planner
