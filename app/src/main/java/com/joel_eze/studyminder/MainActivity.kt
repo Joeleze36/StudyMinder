@@ -18,15 +18,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.joel_eze.studyminder.PomodoroScreen
 import com.joel_eze.studyminder.ui.theme.StudyMinderTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             StudyMinderTheme {
-                StudyMinderHome()
+                val navController = rememberNavController()
+                NavHost(navController, startDestination = "home") {
+                    composable("home") { StudyMinderHome(navController) }
+                    composable("pomodoro") { PomodoroScreen() }
+                }
             }
         }
     }
@@ -34,7 +44,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudyMinderHome() {
+fun StudyMinderHome(navController: androidx.navigation.NavController) {
     Scaffold(
         topBar = {
 
@@ -65,12 +75,12 @@ fun StudyMinderHome() {
             }
         }
     ) { padding ->
-        HomeContent(modifier = Modifier.padding(padding))
+        HomeContent(navController = navController, modifier = Modifier.padding(padding))
     }
 }
 
 @Composable
-fun HomeContent(modifier: Modifier = Modifier) {
+fun HomeContent(navController: NavController, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -95,7 +105,12 @@ fun HomeContent(modifier: Modifier = Modifier) {
             modifier = Modifier.weight(1f)
         ) {
             items(features) { title ->
-                FeatureCard(title)
+                FeatureCard(title = title) {
+                    if (title == "Pomodoro Timer") {
+                        navController.navigate("pomodoro")
+                    }
+                    // You can add more navigation conditions for other features here
+                }
             }
         }
 
@@ -111,12 +126,12 @@ fun HomeContent(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun FeatureCard(title: String) {
+fun FeatureCard(title: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
-            .clickable { },
+            .clickable { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Box(
