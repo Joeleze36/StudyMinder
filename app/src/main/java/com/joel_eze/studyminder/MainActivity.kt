@@ -22,7 +22,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.joel_eze.studyminder.PomodoroScreen
+//import com.joel_eze.studyminder.ui.PomodoroScreen
+import com.joel_eze.studyminder.ui.TodoScreen
 import com.joel_eze.studyminder.ui.theme.StudyMinderTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController, startDestination = "home") {
                     composable("home") { StudyMinderHome(navController) }
                     composable("pomodoro") { PomodoroScreen() }
+                    composable("todo") { TodoScreen() }
                 }
             }
         }
@@ -44,10 +46,9 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudyMinderHome(navController: androidx.navigation.NavController) {
+fun StudyMinderHome(navController: NavController) {
     Scaffold(
         topBar = {
-
             TopAppBar(
                 title = { Text("Studyminder") },
                 navigationIcon = {
@@ -61,7 +62,6 @@ fun StudyMinderHome(navController: androidx.navigation.NavController) {
                     }
                 }
             )
-
         },
         bottomBar = {
             BottomAppBar {
@@ -106,10 +106,11 @@ fun HomeContent(navController: NavController, modifier: Modifier = Modifier) {
         ) {
             items(features) { title ->
                 FeatureCard(title = title) {
-                    if (title == "Pomodoro Timer") {
-                        navController.navigate("pomodoro")
+                    when (title) {
+                        "Pomodoro Timer" -> navController.navigate("pomodoro")
+                        "Todo List" -> navController.navigate("todo")
+                        // Add more cases as needed
                     }
-                    // You can add more navigation conditions for other features here
                 }
             }
         }
