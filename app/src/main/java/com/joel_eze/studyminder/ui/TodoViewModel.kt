@@ -1,4 +1,4 @@
-package com.joel_eze.studyminder.viewmodel
+package com.joel_eze.studyminder.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.mutableStateListOf
