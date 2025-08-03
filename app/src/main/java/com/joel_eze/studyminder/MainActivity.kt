@@ -22,9 +22,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-//import com.joel_eze.studyminder.ui.PomodoroScreen
 import com.joel_eze.studyminder.ui.TodoScreen
+//import com.joel_eze.studyminder.ui.PomodoroScreen
 import com.joel_eze.studyminder.ui.theme.StudyMinderTheme
+import com.joel_eze.studyminder.ui.CurrentLocationText
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,13 +66,20 @@ fun StudyMinderHome(navController: NavController) {
         },
         bottomBar = {
             BottomAppBar {
-                Text(
-                    text = "© Studyminder",
-                    modifier = Modifier
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = "© Studyminder",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp),
+                        textAlign = TextAlign.Center
+                    )
+                    CurrentLocationText(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp),
-                    textAlign = TextAlign.Center
-                )
+                        .padding(bottom = 8.dp),
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
         }
     ) { padding ->
@@ -109,7 +117,6 @@ fun HomeContent(navController: NavController, modifier: Modifier = Modifier) {
                     when (title) {
                         "Pomodoro Timer" -> navController.navigate("pomodoro")
                         "Todo List" -> navController.navigate("todo")
-                        // Add more cases as needed
                     }
                 }
             }

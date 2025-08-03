@@ -48,6 +48,8 @@ dependencies {
 
 
     implementation(libs.androidx.core.ktx)
+    implementation ("androidx.activity:activity-compose:1.8.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
